@@ -1,0 +1,17 @@
+{
+  "name": "roshni",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Roshni: colour-vision assistance app (Phase 1 MVP)",
+  "scripts": {
+    "test": "pnpm -r --if-present test",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "lint": "pnpm -r --if-present lint",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "prettier": "^3.3.0",
+    "typescript": "^5.6.0"
+  },
+  "packageManager": "pnpm@12.5.1"
+}

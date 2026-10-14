@@ -1,0 +1,19 @@
+node_modules/
+dist/
+.expo/
+.expo-shared/
+*.log
+.env
+.env.*
+!.env.example
+android/
+ios/
+*.apk
+*.aab
+.DS_Store
+coverage/
+.tmp-export/
+.tmp-web.log
+
+# Local tooling / editor assistants
+.claude/

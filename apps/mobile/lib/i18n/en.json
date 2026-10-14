@@ -1,0 +1,119 @@
+{
+  "app": {
+    "name": "Roshni",
+    "tagline": "Your Guide in a Colorful World"
+  },
+  "tabs": {
+    "home": "Home",
+    "history": "History",
+    "favorites": "Favorites",
+    "profile": "Profile"
+  },
+  "home": {
+    "uploadTitle": "Upload Image",
+    "uploadSubtitle": "Detect colors and see the world in a better way",
+    "getStarted": "Get Started",
+    "explore": "Explore Features",
+    "features": "Features",
+    "liveCamera": "Live Camera",
+    "settings": "Settings",
+    "soon": "Coming soon",
+    "howItWorks": "How It Works",
+    "voice": "Voice Assistant",
+    "modes": "Color Blind Modes",
+    "testTitle": "Color Vision Test",
+    "testSubtitle": "A quick screening to check your color vision",
+    "didYouKnowTitle": "Did you know?",
+    "didYouKnowBody": "About 1 in 12 men and 1 in 200 women worldwide have some form of color vision deficiency. Roshni helps bridge that gap."
+  },
+  "upload": {
+    "title": "Upload Image",
+    "drop": "Tap to choose an image",
+    "dropHint": "Select any image to detect its colors",
+    "or": "or choose an option",
+    "gallery": "Choose from Gallery",
+    "camera": "Take a Photo",
+    "formats": "Supported formats: JPG, PNG, WEBP",
+    "selected": "Image selected",
+    "cameraDenied": "Camera access is needed to take a photo. You can allow it in your phone settings.",
+    "analysing": "Analysing colors…",
+    "error": "Could not read this image. Please try another photo."
+  },
+  "history": {
+    "title": "History",
+    "emptyTitle": "No analyses yet",
+    "emptyBody": "Photos you analyse will appear here.",
+    "count_one": "{{count}} color detected",
+    "count_other": "{{count}} colors detected",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "deleteTitle": "Delete this item?",
+    "deleteBody": "It will be removed from your history.",
+    "clear": "Clear history",
+    "clearTitle": "Clear history?",
+    "clearBody": "All items will be removed. Your favorites are kept."
+  },
+  "favorites": {
+    "title": "Favorites",
+    "emptyTitle": "No Favorites Yet",
+    "emptyBody": "Save your color detection results using the heart button to find them here.",
+    "saved": "{{count}} saved"
+  },
+  "profile": {
+    "title": "Profile",
+    "subtitle": "Welcome to Roshni",
+    "aboutTitle": "About Roshni",
+    "aboutBody": "Roshni helps people with color vision deficiency identify colors, preview how images look under different vision types, and hear color names spoken aloud.",
+    "language": "Language",
+    "english": "English",
+    "urdu": "اردو",
+    "restartNote": "Restart the app to apply the new text direction.",
+    "disclaimer": "Roshni is an assistive tool, not a medical device. It does not diagnose any condition. Do not rely on it for traffic signals, electrical wiring or medication. If you are concerned about your vision, please see an eye-care professional.",
+    "developer": "Developer tools",
+    "voiceCheck": "Voice check (English / Urdu)",
+    "voiceSection": "Voice",
+    "autoRead": "Read results aloud automatically",
+    "speakOnTap": "Speak the color when I tap the photo",
+    "speed": "Speech speed",
+    "slow": "Slow",
+    "normal": "Normal",
+    "fast": "Fast"
+  },
+  "voiceCheck": {
+    "title": "Voice check",
+    "intro": "Checks which text-to-speech voices this phone has installed.",
+    "voices": "Voices installed",
+    "urduFound": "Urdu voice found",
+    "urduMissing": "No Urdu voice found on this phone",
+    "speakEnglish": "Speak English sample",
+    "speakUrdu": "Speak Urdu sample",
+    "englishSample": "The image contains dark red, pale yellow and teal.",
+    "urduSample": "تصویر میں گہرا سرخ، ہلکا پیلا اور سبز نیلا رنگ ہے۔",
+    "stop": "Stop"
+  },
+  "common": {
+    "back": "Back"
+  },
+  "result": {
+    "title": "Result",
+    "count_one": "{{count}} color detected",
+    "count_other": "{{count}} colors detected",
+    "palette": "Colors in this image",
+    "tapHint": "Tap the photo to name any point",
+    "picked": "Selected point",
+    "empty": "No colors could be detected in this image.",
+    "share": "{{percent}}% of the image",
+    "speak": "Read aloud",
+    "stop": "Stop",
+    "favourite": "Add to favorites",
+    "unfavourite": "Remove from favorites",
+    "noUrdu": "This phone has no Urdu voice. Install one in Settings > Text-to-speech, or switch Roshni to English to hear color names.",
+    "savedPhotoNote": "Saved photo preview"
+  },
+  "voice": {
+    "summary_one": "The image contains {{count}} color: {{list}}.",
+    "summary_other": "The image contains {{count}} colors: {{list}}.",
+    "item": "{{name}}, {{percent}} percent",
+    "separator": "; "
+  }
+}
