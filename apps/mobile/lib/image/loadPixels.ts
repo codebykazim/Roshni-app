@@ -75,7 +75,9 @@ export async function loadImage(sourceUri: string): Promise<LoadedImage> {
     .getCanvas()
     .drawImageRect(decoded, rect(0, 0, fullW, fullH), rect(0, 0, fullW, fullH), Skia.Paint());
   fullSurface.flush();
-  const fullImage = fullSurface.makeImageSnapshot();
+  const snapshot = fullSurface.makeImageSnapshot();
+  // A GPU-backed snapshot cannot be drawn on a screen Canvas; copy it to a CPU raster.
+  const fullImage = snapshot.makeNonTextureImage() ?? snapshot;
 
   const scale = Math.min(1, ANALYSIS_MAX_EDGE / Math.max(fullW, fullH));
   const width = Math.max(1, Math.round(fullW * scale));

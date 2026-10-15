@@ -1,12 +1,13 @@
-import { Ionicons } from '@expo/vector-icons';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
-import { Pressable, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Switch, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { ScreenHeader } from '@/components/ScreenHeader';
 import { colors, radius, space, TOUCH_TARGET } from '@/constants/theme';
 import type { Language } from '@/lib/i18n';
 import { useSettings, type SpeechSpeed } from '@/lib/store/settings';
+import { Text } from '@/components/AppText';
 
 export default function ProfileScreen() {
   const { t } = useTranslation();

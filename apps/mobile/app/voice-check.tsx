@@ -1,10 +1,11 @@
 import * as Speech from 'expo-speech';
 import { useEffect, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { ScreenHeader } from '@/components/ScreenHeader';
 import { colors, radius, space, TOUCH_TARGET } from '@/constants/theme';
+import { Text } from '@/components/AppText';
 
 /** Spike screen (plan: Days 1-2): which TTS voices does this phone have, and does it speak Urdu? */
 export default function VoiceCheckScreen() {

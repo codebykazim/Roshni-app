@@ -14,10 +14,13 @@ interface SettingsState {
   /** Speak the colour name when the user taps a point on the photo. */
   speakOnTap: boolean;
   speechSpeed: SpeechSpeed;
+  /** False until the first-run onboarding has been completed or skipped. */
+  onboarded: boolean;
   changeLanguage: (language: Language) => void;
   setAutoRead: (value: boolean) => void;
   setSpeakOnTap: (value: boolean) => void;
   setSpeechSpeed: (value: SpeechSpeed) => void;
+  completeOnboarding: () => void;
 }
 
 function loadLanguage(): Language {
@@ -40,6 +43,7 @@ export const useSettings = create<SettingsState>((set) => ({
   autoRead: getSetting('autoRead') === '1',
   speakOnTap: getSetting('speakOnTap') !== '0',
   speechSpeed: loadSpeed(),
+  onboarded: getSetting('onboarded') === '1',
   changeLanguage: (language) => {
     const { directionChanged } = setLanguage(language);
     setSetting('language', language);
@@ -56,5 +60,9 @@ export const useSettings = create<SettingsState>((set) => ({
   setSpeechSpeed: (value) => {
     setSetting('speechSpeed', value);
     set({ speechSpeed: value });
+  },
+  completeOnboarding: () => {
+    setSetting('onboarded', '1');
+    set({ onboarded: true });
   },
 }));

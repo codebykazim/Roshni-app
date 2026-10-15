@@ -1,11 +1,12 @@
-import { Ionicons } from '@expo/vector-icons';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
 import type { ReactNode } from 'react';
-import { I18nManager, Pressable, StyleSheet, Text, View } from 'react-native';
+import { I18nManager, Pressable, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 
 import { colors, radius, space, TOUCH_TARGET } from '@/constants/theme';
+import { Text } from '@/components/AppText';
 
 interface Props {
   title: string;
@@ -26,7 +27,7 @@ export function ScreenHeader({ title, subtitle, back, right, leading }: Props) {
         <Pressable
           accessibilityRole="button"
           accessibilityLabel={t('common.back')}
-          onPress={() => router.back()}
+          onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}
           style={styles.iconButton}
         >
           <Ionicons

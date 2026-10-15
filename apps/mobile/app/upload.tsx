@@ -1,15 +1,16 @@
-import { Ionicons } from '@expo/vector-icons';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import * as ImagePicker from 'expo-image-picker';
 import { router } from 'expo-router';
 import { useState } from 'react';
-import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { ScreenHeader } from '@/components/ScreenHeader';
 import { colors, radius, space, TOUCH_TARGET } from '@/constants/theme';
-import { analyzeImage } from '@/lib/analysis/analyzeImage';
+import { analyseAndSave } from '@/lib/analysis/analyseAndSave';
 import { useCurrentAnalysis } from '@/lib/analysis/current';
-import { insertAnalysis, type AnalysisSource } from '@/lib/db';
+import type { AnalysisSource } from '@/lib/db';
+import { Text } from '@/components/AppText';
 
 export default function UploadScreen() {
   const { t } = useTranslation();
@@ -21,16 +22,7 @@ export default function UploadScreen() {
     setBusy(true);
     setMessage(null);
     try {
-      const result = await analyzeImage(uri);
-      const saved = insertAnalysis({ source, ...result });
-      setCurrent({
-        id: saved.id,
-        uri: result.uri,
-        width: result.width,
-        height: result.height,
-        full: result.full,
-        colours: saved.colours,
-      });
+      setCurrent(await analyseAndSave(uri, source));
       router.push('/result');
     } catch (error) {
       console.warn('analyse failed', error);

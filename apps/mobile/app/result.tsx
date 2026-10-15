@@ -1,20 +1,13 @@
-import { Ionicons } from '@expo/vector-icons';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { displayName, type PickedColour } from '@roshni/color-engine';
-import { Redirect, useLocalSearchParams } from 'expo-router';
+import { Redirect, router, useLocalSearchParams } from 'expo-router';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import {
-  Image,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  useWindowDimensions,
-  View,
-  type GestureResponderEvent,
-} from 'react-native';
+import { Pressable, ScrollView, StyleSheet, useWindowDimensions, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
+import { DisclaimerNote } from '@/components/DisclaimerNote';
 import { ScreenHeader } from '@/components/ScreenHeader';
+import { ZoomableImage } from '@/components/ZoomableImage';
 import { colors, radius, space, TOUCH_TARGET } from '@/constants/theme';
 import { useCurrentAnalysis, type CurrentAnalysis } from '@/lib/analysis/current';
 import { getAnalysis, setFavourite } from '@/lib/db';
@@ -22,6 +15,7 @@ import { pickFromImage } from '@/lib/image/pickPixel';
 import { SPEECH_RATE, useSettings } from '@/lib/store/settings';
 import { speak, stopSpeaking } from '@/lib/voice/speech';
 import { buildSpokenSummary } from '@/lib/voice/summary';
+import { Text } from '@/components/AppText';
 
 const MAX_IMAGE_HEIGHT = 380;
 
@@ -104,19 +98,13 @@ export default function ResultScreen() {
   const displayH = displayW / aspect;
   const canPick = view.full !== null;
 
-  function onTap(event: GestureResponderEvent) {
+  /** `x` and `y` are in the displayed photo's own coordinates (the zoom is already undone). */
+  function onTap(x: number, y: number) {
     if (!view?.full) return;
-    const { locationX, locationY } = event.nativeEvent;
     const { image, width, height } = view.full;
-    const colour = pickFromImage(
-      image,
-      width,
-      height,
-      (locationX / displayW) * width,
-      (locationY / displayH) * height,
-    );
+    const colour = pickFromImage(image, width, height, (x / displayW) * width, (y / displayH) * height);
     if (!colour) return;
-    setPicked({ colour, x: locationX, y: locationY });
+    setPicked({ colour, x, y });
     if (speakOnTap) void say(displayName(colour, language), false);
   }
 
@@ -149,24 +137,13 @@ export default function ResultScreen() {
         }
       />
       <ScrollView contentContainerStyle={styles.content}>
-        <Pressable
-          accessibilityRole="image"
-          accessibilityHint={canPick ? t('result.tapHint') : undefined}
-          disabled={!canPick}
-          onPress={onTap}
-          style={[styles.imageWrap, { width: displayW, height: displayH }]}
-        >
-          <Image source={{ uri: view.uri }} style={{ width: displayW, height: displayH }} />
-          {picked ? (
-            <View
-              pointerEvents="none"
-              style={[
-                styles.marker,
-                { left: picked.x - 14, top: picked.y - 14, backgroundColor: picked.colour.hex },
-              ]}
-            />
-          ) : null}
-        </Pressable>
+        <ZoomableImage
+          uri={view.uri}
+          width={displayW}
+          height={displayH}
+          onTap={canPick ? onTap : undefined}
+          marker={picked ? { x: picked.x, y: picked.y, color: picked.colour.hex } : null}
+        />
         <Text style={styles.hint}>{canPick ? t('result.tapHint') : t('result.savedPhotoNote')}</Text>
 
         <Pressable
@@ -182,6 +159,15 @@ export default function ResultScreen() {
             {voiceMessage}
           </Text>
         ) : null}
+
+        <Pressable
+          accessibilityRole="button"
+          onPress={() => router.push({ pathname: '/simulate', params: { id: view.id } })}
+          style={styles.secondaryButton}
+        >
+          <Ionicons name="eye-outline" size={20} color={colors.primary700} />
+          <Text style={styles.secondaryText}>{t('result.simulate')}</Text>
+        </Pressable>
 
         {picked ? (
           <View
@@ -226,6 +212,7 @@ export default function ResultScreen() {
             );
           })
         )}
+        <DisclaimerNote />
       </ScrollView>
     </View>
   );
@@ -242,20 +229,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  imageWrap: {
-    alignSelf: 'center',
-    borderRadius: radius.card,
-    overflow: 'hidden',
-    backgroundColor: colors.primary100,
-  },
-  marker: {
-    position: 'absolute',
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    borderWidth: 3,
-    borderColor: colors.white,
-  },
   hint: { color: colors.inkSoft, fontSize: 14, textAlign: 'center' },
   speakButton: {
     minHeight: TOUCH_TARGET + 8,
@@ -267,6 +240,18 @@ const styles = StyleSheet.create({
     gap: space.sm,
   },
   speakText: { color: colors.white, fontSize: 17, fontWeight: '700' },
+  secondaryButton: {
+    minHeight: TOUCH_TARGET + 8,
+    borderRadius: radius.control,
+    borderWidth: 1.5,
+    borderColor: colors.primary300,
+    backgroundColor: colors.white,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: space.sm,
+  },
+  secondaryText: { color: colors.primary700, fontSize: 17, fontWeight: '700' },
   voiceMessage: { color: colors.red, fontSize: 14, lineHeight: 20, textAlign: 'center' },
   pickedCard: {
     flexDirection: 'row',

@@ -1,11 +1,12 @@
-import { Ionicons } from '@expo/vector-icons';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
-import { Alert, FlatList, Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Alert, FlatList, Image, Pressable, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { colors, radius, space, TOUCH_TARGET } from '@/constants/theme';
 import type { Analysis } from '@/lib/db';
 import { useSettings } from '@/lib/store/settings';
+import { Text } from '@/components/AppText';
 
 interface Props {
   items: Analysis[];

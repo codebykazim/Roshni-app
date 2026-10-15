@@ -1,6 +1,6 @@
 import { useFocusEffect } from 'expo-router';
 import { useCallback, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { AnalysisList } from '@/components/AnalysisList';
@@ -8,6 +8,7 @@ import { EmptyState } from '@/components/EmptyState';
 import { ScreenHeader } from '@/components/ScreenHeader';
 import { colors } from '@/constants/theme';
 import { deleteAnalysis, listAnalyses, type Analysis } from '@/lib/db';
+import { Text } from '@/components/AppText';
 
 export default function FavoritesScreen() {
   const { t } = useTranslation();

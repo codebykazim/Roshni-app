@@ -1,10 +1,11 @@
-import { Ionicons } from '@expo/vector-icons';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { ScreenHeader } from '@/components/ScreenHeader';
 import { colors, radius, space, TOUCH_TARGET } from '@/constants/theme';
+import { Text } from '@/components/AppText';
 
 type IconName = React.ComponentProps<typeof Ionicons>['name'];
 
@@ -19,20 +20,14 @@ interface Tile {
 }
 
 function Logo() {
-  const ring = ['#EF4444', '#F59E0B', '#22C55E', '#3B82F6', '#A855F7'];
   return (
-    <View style={styles.logo} accessibilityElementsHidden importantForAccessibility="no">
-      {ring.map((c, i) => (
-        <View
-          key={c}
-          style={[
-            styles.logoDot,
-            { backgroundColor: c, transform: [{ rotate: `${i * 72}deg` }, { translateY: -14 }] },
-          ]}
-        />
-      ))}
-      <View style={styles.logoCentre} />
-    </View>
+    <Image
+      source={require('../../assets/images/logo-mark.png')}
+      style={styles.logoImage}
+      resizeMode="contain"
+      accessibilityElementsHidden
+      importantForAccessibility="no"
+    />
   );
 }
 
@@ -46,6 +41,7 @@ export default function HomeScreen() {
       icon: 'camera-outline',
       tint: colors.primary600,
       bg: colors.primary100,
+      onPress: () => router.push('/camera'),
     },
     {
       key: 'modes',
@@ -53,13 +49,15 @@ export default function HomeScreen() {
       icon: 'eye-outline',
       tint: colors.blue,
       bg: colors.blueBg,
+      onPress: () => router.push('/simulate'),
     },
     {
-      key: 'voice',
-      label: t('home.voice'),
-      icon: 'mic-outline',
+      key: 'history',
+      label: t('home.history'),
+      icon: 'time-outline',
       tint: colors.red,
       bg: colors.redBg,
+      onPress: () => router.push('/history'),
     },
     {
       key: 'settings',
@@ -153,9 +151,7 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.surface },
   content: { padding: space.xl, paddingBottom: space.xxl, gap: space.lg },
-  logo: { width: 40, height: 40, alignItems: 'center', justifyContent: 'center' },
-  logoDot: { position: 'absolute', width: 12, height: 12, borderRadius: 6 },
-  logoCentre: { width: 14, height: 14, borderRadius: 7, backgroundColor: colors.white },
+  logoImage: { width: 60, height: 52 },
   bell: {
     width: TOUCH_TARGET,
     height: TOUCH_TARGET,
@@ -203,7 +199,7 @@ const styles = StyleSheet.create({
     gap: space.md,
     minHeight: 120,
   },
-  tileSoon: { opacity: 0.75 },
+  tileSoon: { borderWidth: 1.5, borderStyle: 'dashed', borderColor: colors.primary300 },
   tileIcon: {
     width: 48,
     height: 48,
