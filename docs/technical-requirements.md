@@ -50,7 +50,7 @@ Why now (from the pitch): about 300 million people live with CVD globally; in Pa
 
 **Primary personas:** (1) an adult with red-green CVD who wants quick answers while choosing clothes or reading charts; (2) a parent or teacher of a child who may have CVD; (3) someone who suspects they have CVD and wants a first screening; (4) a designer or student who wants to preview an image as a CVD viewer sees it.
 
-**Sign-up model:** there is no mandatory sign-up. The first launch asks for a language and (optionally) the user's vision type, then lands on Home. Sign-in is offered, never forced, in Profile and after the user has saved something worth backing up.
+**Sign-up model:** there is no mandatory sign-up. The first launch asks for a language and shows what the app asks for and the safety notice, then lands on Home. It never asks about the user's own colour vision (see ADR 0005). Sign-in is offered, never forced, in Profile and after the user has saved something worth backing up.
 
 ## 3. Technology Stack
 
@@ -130,9 +130,9 @@ The visual identity is a purple palette with soft tinted cards. These are the de
 
 ### 5.1 Onboarding & Language
 
-- First launch: choose language (English / اردو), then optionally say whether you have CVD and which type ("Not sure" is allowed), then camera and photos permission explanations
-- The answer personalises defaults (for example the simulation mode shown first) and is editable later in Settings
-- Skippable end to end; never blocks the app
+- First launch: choose language (English / اردو), then camera and photos permission explanations and the safety notice
+- Roshni does not ask whether the user has a colour vision deficiency: the answer would only change a default, and health-like questions do not fit a privacy-first product
+- Never blocks the app
 
 ### 5.2 Colour Detection (core)
 
@@ -274,7 +274,7 @@ HOME ──► Upload Image ──► Colour engine (on device) ──► RESULT
 
 ### 5.9 Settings
 
-Language · Speech (voice, rate, auto-read) · Display (theme, high contrast, text size) · Vision profile (type, severity) · Data and privacy (what is stored, clear history, opt-in thumbnail backup, opt-in analytics) · Account (sign in, export my data, delete my account) · About (version, licences, disclaimer, contact and feedback)
+Language · Speech (voice, rate, auto-read) · Display (theme, high contrast, text size) · Data and privacy (what is stored, clear history, opt-in thumbnail backup, opt-in analytics) · Account (sign in, export my data, delete my account) · About (version, licences, disclaimer, contact and feedback)
 
 ### 5.10 Profile & Account
 
@@ -296,7 +296,7 @@ Language · Speech (voice, rate, auto-read) · Display (theme, high contrast, te
 
 | Route | Screen |
 | --- | --- |
-| `/onboarding` | Language, vision type, permissions |
+| `/onboarding` | Language, permissions, safety notice |
 | `/home` | Hero "Upload Image", feature grid, colour-test card, "Did you know?" |
 | `/upload` | Drag and drop, Choose from Gallery, Take a Photo, formats note |
 | `/result/[id]` | Image, palette, tap-to-pick, speak, favourite, simulate, Ask Roshni |
@@ -315,7 +315,7 @@ Bottom tabs: Home · History · Favourites · Profile. The "Settings" tile on Ho
 
 ## 7. End-to-End User Flows
 
-1. **First run:** choose language → optional vision type → permissions → Home
+1. **First run:** choose language → permissions and safety notice → Home
 2. **Identify colours:** Home → Upload Image → pick or capture → analysis (under 1 s) → result with palette → auto-read → tap any point to name it → favourite or save to history
 3. **See through CVD eyes:** result → Simulate → choose mode and severity → before/after → (optional) Correction view
 4. **Check my vision:** Home → Colour Vision Test → instructions → plates → result and guidance → saved to history
@@ -369,7 +369,7 @@ Two stores share a vocabulary: **SQLite on the device** (source of truth for gue
 | `analyses` | id (UUID), created_at, updated_at, source (`gallery` / `camera` / `live`), thumb_path, width, height, palette (JSON: hex, rgb, name_en, name_ur, share), mode_used, is_favorite, deleted_at (tombstone), synced_at |
 | `test_results` | id, taken_at, plate_ids (JSON), answers (JSON), score, classification, version_of_scoring, synced_at |
 | `chat_threads` / `chat_messages` | id, thread_id, role (`user` / `assistant`), content, context (JSON: palette or test class, nullable), created_at, synced_at (null unless opt-in sync) |
-| `settings` | key, value (language, speech rate, auto-read, theme, vision type, severity, analytics opt-in, backup opt-in) |
+| `settings` | key, value (language, speech rate, auto-read, theme, analytics opt-in, backup opt-in) |
 | `sync_state` | last_pull_at, last_push_at |
 
 ### Server (PostgreSQL)
@@ -410,8 +410,6 @@ Two stores share a vocabulary: **SQLite on the device** (source of truth for gue
 | Field | Type | Notes |
 | --- | --- | --- |
 | user_id | FK → users.id, PK |  |
-| vision_type | enum | `none`, `protan`, `deutan`, `tritan`, `achromat`, `unsure` |
-| severity | numeric | 0–1, nullable |
 | speech_rate / auto_read / theme | mixed | Mirrors the device settings |
 | backup_thumbnails | boolean | Opt-in |
 | analytics_opt_in | boolean |  |
