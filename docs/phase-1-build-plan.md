@@ -33,7 +33,7 @@ The strategy note's central point is accepted: the basic colour detector is easy
 | 8 | Simulation: protan, deutan, tritan, achromatopsia with before/after | §5.4 |
 | 9 | Local history and favourites (SQLite, no account) | §5.7, §5.8 |
 | 10 | Disclaimer screen and wording: assistive tool, not a diagnosis, not for safety-critical use | §8 |
-| 11 | Real Settings screen (language, voice, vision type) | §5.9 |
+| 11 | Real Settings screen (language, voice) | §5.9 |
 
 ### In Phase 2 (weeks 5 to 7, after the demo)
 
@@ -91,8 +91,8 @@ cd roshni && pnpm add nativewind expo-router expo-sqlite expo-speech expo-image-
 - Urdu colour names and Urdu interface; RTL layout; Urdu font bundled
 - SQLite tables: analyses and settings. History list, detail view, delete one, delete all
 - Favourites (heart on a result), "N saved" counter, empty states
-- Real Settings screen: language, voice, speed, vision type
-- First-run onboarding: language, optional vision type, permission explanations
+- Real Settings screen: language, voice, speed
+- First-run onboarding: language, permission explanations, safety notice
 
 **Exit:** the complete "identify and hear" flow works in English and Urdu, and data survives an app restart.
 
