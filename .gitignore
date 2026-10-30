@@ -3,6 +3,8 @@ dist/
 .expo/
 .expo-shared/
 *.log
+.env
+.env.*
 !.env.example
 android/
 ios/
@@ -15,4 +17,3 @@ coverage/
 
 # Local tooling / editor assistants
 .claude/
-config.bat
