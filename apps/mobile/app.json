@@ -40,7 +40,9 @@
       [
         "expo-camera",
         {
-          "cameraPermission": "Roshni uses the camera to identify colours."
+          "cameraPermission": "Roshni uses the camera to identify colours.",
+          "recordAudioAndroid": false,
+          "barcodeScannerEnabled": false
         }
       ],
       [
@@ -54,6 +56,13 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "5da78729-7aa0-4f6d-971b-ef706cb8d116"
+      }
+    },
+    "owner": "mkazim01"
   }
 }
