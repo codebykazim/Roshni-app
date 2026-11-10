@@ -25,7 +25,8 @@
     "testSubtitle": "A quick screening to check your color vision",
     "didYouKnowTitle": "Did you know?",
     "didYouKnowBody": "About 1 in 12 men and 1 in 200 women worldwide have some form of color vision deficiency. Roshni helps bridge that gap.",
-    "history": "History"
+    "history": "History",
+    "correction": "Color Correction"
   },
   "upload": {
     "title": "Upload Image",
@@ -176,5 +177,68 @@
     "splitHint": "Left: original. Right: simulated. Drag the line.",
     "view": "View",
     "switchPhoto": "Choose another photo"
+  },
+  "test": {
+    "title": "Color Vision Test",
+    "intro": "Spot the number hidden in each circle of dots. It takes about two minutes.",
+    "tips": "For a fair result: use a bright screen, turn off night mode and blue-light filters, wear your glasses if you use them, and sit in good light.",
+    "notDiagnosis": "This is a quick screening game, not a medical test. It cannot diagnose anything.",
+    "start": "Start",
+    "practice": "Practice plate",
+    "plateOf": "Plate {{current}} of {{total}}",
+    "question": "Which number do you see?",
+    "cantSee": "I can't see a number",
+    "next": "Next",
+    "resultTitle": "Your result",
+    "retake": "Take it again",
+    "done": "Done",
+    "scoreRg": "Red-green plates missed: {{missed}} of {{total}}",
+    "outcome": {
+      "typical": {
+        "title": "No difficulty spotted",
+        "body": "You read these plates the way most people with typical colour vision do."
+      },
+      "red-green": {
+        "title": "Possible red-green difficulty",
+        "body": "You had trouble with several red-green plates. This can be a sign of a red-green colour vision difference, which is common and usually lifelong."
+      },
+      "blue-yellow": {
+        "title": "Possible blue-yellow difficulty",
+        "body": "You had trouble with the blue-yellow plates."
+      },
+      "both": {
+        "title": "Possible colour difficulty",
+        "body": "You had trouble with several plates."
+      },
+      "retake": {
+        "title": "Let's try again",
+        "body": "You could not read the practice plate, which anyone should. Check your screen brightness and lighting, then take the test again."
+      }
+    },
+    "next_steps": "What next?",
+    "nextStepsBody": "A screening on a phone can be wrong. For a proper answer, ask an eye specialist for a colour vision test. Roshni's camera and simulation tools work whatever your result is.",
+    "history": "Previous results",
+    "noHistory": "No results yet"
+  },
+  "correct": {
+    "title": "Color Correction",
+    "experimental": "Experimental",
+    "experimentalNote": "This is an early feature that shifts colours to make them easier to tell apart. It has not yet been tested with colour-blind people, so it may help some photos and not others.",
+    "choosePhoto": "Choose a photo",
+    "choosePhotoBody": "Pick a photo and we will adjust its colors to be easier to tell apart.",
+    "pick": "Choose from Gallery",
+    "switchPhoto": "Choose another photo",
+    "loadError": "Could not open this photo.",
+    "type": "Your type of color blindness",
+    "notSure": "Not sure which? Take the Color Vision Test first, or try each one and keep what looks clearest.",
+    "strength": "Strength",
+    "corrected": "Corrected",
+    "original": "Original",
+    "split": "Split",
+    "splitHint": "Left: original. Right: corrected. Drag the line.",
+    "protan": "Protan (red-weak)",
+    "deutan": "Deutan (green-weak)",
+    "tritan": "Tritan (blue-weak)",
+    "caption": "Corrected colours are not the true colours of the photo. They are shifted so differences are easier to see. Do not rely on them for safety-critical decisions."
   }
 }

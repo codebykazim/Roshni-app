@@ -6,3 +6,4 @@ export * from './analyse';
 export * from './localise';
 export * from './simulation';
 export * from './contrast';
+export * from './correction';

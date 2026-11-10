@@ -32,7 +32,7 @@ interface AnalysisRow {
   is_favorite: number;
 }
 
-const SCHEMA_VERSION = 1;
+const SCHEMA_VERSION = 2;
 
 const db = openDatabaseSync('roshni.db');
 
@@ -57,6 +57,20 @@ function migrate() {
           key TEXT PRIMARY KEY NOT NULL,
           value TEXT NOT NULL
         );
+      `);
+    }
+    if (current < 2) {
+      db.execSync(`
+        CREATE TABLE IF NOT EXISTS test_results (
+          id TEXT PRIMARY KEY NOT NULL,
+          created_at INTEGER NOT NULL,
+          plate_set_version TEXT NOT NULL,
+          outcome TEXT NOT NULL,
+          rg_misses INTEGER NOT NULL,
+          rg_total INTEGER NOT NULL,
+          answers TEXT NOT NULL
+        );
+        CREATE INDEX IF NOT EXISTS test_results_created_idx ON test_results (created_at DESC);
       `);
     }
     db.execSync(`PRAGMA user_version = ${SCHEMA_VERSION}`);
@@ -150,4 +164,63 @@ export function setSetting(key: string, value: string): void {
     key,
     value,
   );
+}
+
+/** A finished colour vision test. Stored on this phone only. */
+export interface TestResult {
+  id: string;
+  createdAt: number;
+  plateSetVersion: string;
+  outcome: string;
+  rgMisses: number;
+  rgTotal: number;
+  /** Plate id to the player's answer (null = could not see a number). */
+  answers: Record<string, string | null>;
+}
+
+interface TestResultRow {
+  id: string;
+  created_at: number;
+  plate_set_version: string;
+  outcome: string;
+  rg_misses: number;
+  rg_total: number;
+  answers: string;
+}
+
+function toTestResult(row: TestResultRow): TestResult {
+  return {
+    id: row.id,
+    createdAt: row.created_at,
+    plateSetVersion: row.plate_set_version,
+    outcome: row.outcome,
+    rgMisses: row.rg_misses,
+    rgTotal: row.rg_total,
+    answers: JSON.parse(row.answers) as TestResult['answers'],
+  };
+}
+
+export function insertTestResult(input: Omit<TestResult, 'id' | 'createdAt'>): TestResult {
+  const id = newId();
+  const createdAt = Date.now();
+  db.runSync(
+    'INSERT INTO test_results (id, created_at, plate_set_version, outcome, rg_misses, rg_total, answers) VALUES (?, ?, ?, ?, ?, ?, ?)',
+    id,
+    createdAt,
+    input.plateSetVersion,
+    input.outcome,
+    input.rgMisses,
+    input.rgTotal,
+    JSON.stringify(input.answers),
+  );
+  return { id, createdAt, ...input };
+}
+
+export function getTestResult(id: string): TestResult | null {
+  const row = db.getFirstSync<TestResultRow>('SELECT * FROM test_results WHERE id = ?', id);
+  return row ? toTestResult(row) : null;
+}
+
+export function listTestResults(): TestResult[] {
+  return db.getAllSync<TestResultRow>('SELECT * FROM test_results ORDER BY created_at DESC').map(toTestResult);
 }
