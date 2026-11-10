@@ -52,6 +52,14 @@ export default function HomeScreen() {
       onPress: () => router.push('/simulate'),
     },
     {
+      key: 'correct',
+      label: t('home.correction'),
+      icon: 'color-wand-outline',
+      tint: colors.primary700,
+      bg: colors.primary50,
+      onPress: () => router.push('/correct'),
+    },
+    {
       key: 'history',
       label: t('home.history'),
       icon: 'time-outline',
@@ -124,10 +132,11 @@ export default function HomeScreen() {
           })}
         </View>
 
-        <View
-          style={[styles.testCard, styles.tileSoon]}
-          accessible
-          accessibilityLabel={`${t('home.testTitle')}. ${t('home.soon')}`}
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={t('home.testTitle')}
+          onPress={() => router.push('/test')}
+          style={styles.testCard}
         >
           <View style={styles.testBadge}>
             <Ionicons name="eye" size={28} color={colors.primary300} />
@@ -135,9 +144,9 @@ export default function HomeScreen() {
           <View style={{ flex: 1 }}>
             <Text style={styles.testTitle}>{t('home.testTitle')}</Text>
             <Text style={styles.testSubtitle}>{t('home.testSubtitle')}</Text>
-            <Text style={[styles.soon, { color: colors.primary300 }]}>{t('home.soon')}</Text>
           </View>
-        </View>
+          <Ionicons name="chevron-forward" size={22} color={colors.primary300} />
+        </Pressable>
 
         <View style={styles.tip}>
           <Text style={styles.tipTitle}>💡 {t('home.didYouKnowTitle')}</Text>

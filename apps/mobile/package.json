@@ -6,6 +6,7 @@
     "@expo-google-fonts/noto-nastaliq-urdu": "^0.4.2",
     "@expo/vector-icons": "^15.1.1",
     "@roshni/color-engine": "workspace:*",
+    "@roshni/plates": "workspace:*",
     "@shopify/react-native-skia": "2.6.2",
     "expo": "~57.0.30",
     "expo-camera": "~57.0.6",

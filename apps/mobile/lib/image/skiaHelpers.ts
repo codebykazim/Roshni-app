@@ -1,7 +1,9 @@
 import {
   pickColourAt,
+  correctionMatrix,
   simulationMatrix,
   toColourMatrix4x5,
+  type CorrectableType,
   type CvdType,
   type PickedColour,
 } from '@roshni/color-engine';
@@ -38,6 +40,29 @@ export function renderSimulated(image: SkImage, type: CvdType, severity: number)
   surface.flush();
   const snapshot = surface.makeImageSnapshot();
   // GPU-backed snapshots cannot be drawn on a screen Canvas; copy to a CPU raster.
+  return snapshot.makeNonTextureImage() ?? snapshot;
+}
+
+/**
+ * The image with colours shifted so a person with the given deficiency can tell them apart more
+ * easily (daltonization). Same filter chain as the simulation, with the correction matrix.
+ */
+export function renderCorrected(image: SkImage, type: CorrectableType, strength: number): SkImage {
+  const surface = Skia.Surface.MakeOffscreen(image.width(), image.height());
+  if (!surface) return image;
+  const { ColorFilter } = Skia;
+  const filter = ColorFilter.MakeCompose(
+    ColorFilter.MakeLinearToSRGBGamma(),
+    ColorFilter.MakeCompose(
+      ColorFilter.MakeMatrix(toColourMatrix4x5(correctionMatrix(type, strength))),
+      ColorFilter.MakeSRGBToLinearGamma(),
+    ),
+  );
+  const paint = Skia.Paint();
+  paint.setColorFilter(filter);
+  surface.getCanvas().drawImage(image, 0, 0, paint);
+  surface.flush();
+  const snapshot = surface.makeImageSnapshot();
   return snapshot.makeNonTextureImage() ?? snapshot;
 }
 
